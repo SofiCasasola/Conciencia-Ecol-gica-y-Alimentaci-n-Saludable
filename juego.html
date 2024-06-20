@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Comida Saludable</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #juego {
+            width: 400px;
+            height: 400px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #puntuacion {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .comida {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            font-weight: bold;
+        }
+        .malo {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="juego">
+        <div id="puntuacion">Puntuación: <span id="puntos">0</span></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const juego = document.getElementById("juego");
+            const puntosDisplay = document.getElementById("puntos");
+            let puntos = 0;
+
+            function crearComida() {
+                const comida = document.createElement("div");
+                comida.classList.add("comida");
+                comida.style.left = Math.random() * (juego.clientWidth - 50) + "px";
+                comida.innerText = Math.random() < 0.5 ? "+" : "-";
+                comida.addEventListener("click", function() {
+                    if (comida.innerText === "+") {
+                        puntos++;
+                    } else {
+                        puntos--;
+                    }
+                    puntosDisplay.textContent = puntos;
+                    juego.removeChild(comida);
+                });
+                juego.appendChild(comida);
+
+                setTimeout(() => {
+                    juego.removeChild(comida);
+                }, 2000);
+            }
+
+            setInterval(crearComida, 1000);
+        });
+    </script>
+</body>
+</html>
